@@ -1,0 +1,42 @@
+{
+  "name": "retap",
+  "version": "1.0.0",
+  "description": "Wrapper around tape that adds functions for testing React components",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "babel-tape-runner \"test/check-correct-output.jsx\" | faucet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidmason/retap.git"
+  },
+  "keywords": [
+    "test",
+    "tap",
+    "react",
+    "react-component"
+  ],
+  "author": {
+    "name": "David Mason",
+    "email": "drdmason@gmail.com",
+    "url": "https://github.com/davidmason"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidmason/retap/issues"
+  },
+  "homepage": "https://github.com/davidmason/retap#readme",
+  "dependencies": {
+    "defined": "^1.0.0",
+    "lodash": "^3.10.1",
+    "react-unit": "^1.0.6",
+    "tape": "^4.2.0"
+  },
+  "devDependencies": {
+    "babel-tape-runner": "^1.2.0",
+    "classnames": "^2.1.3",
+    "concat-stream": "^1.5.0",
+    "faucet": "0.0.1",
+    "react": "^0.13.3"
+  }
+}
