@@ -76,7 +76,7 @@ test('correct tap output for errors', function correctFailureOutput (t) {
   })
   proc.stdout.pipe(concat(function (output) {
     const actual = output.toString('utf8')
-    const dir = path.join(__dirname, '..')
+    const checkFile = path.join(__dirname, '..', 'src', 'retap.jsx')
     const expected = `TAP version 13
 # DwarfPlanet generates correct markup
 ok 1 wrong element type at (root)<div>
@@ -87,7 +87,7 @@ not ok 2 Missing expected classNames at path (root)<div>
       [ 'elf-planet' ]
     actual: |-
       []
-    at: Test._tapeLibTest2.default.isSameClasses (${dir}/index.jsx:125:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:125:8)
   ...
 not ok 3 Found unexpected classNames at path (root)<div>
   ---
@@ -96,7 +96,7 @@ not ok 3 Found unexpected classNames at path (root)<div>
       []
     actual: |-
       [ 'dwarf-planet' ]
-    at: Test._tapeLibTest2.default.isSameClasses (${dir}/index.jsx:133:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:133:8)
   ...
 ok 4 should have same styles at (root)<div>
 not ok 5 child elements should be identical at (root)<div>
@@ -104,7 +104,7 @@ not ok 5 child elements should be identical at (root)<div>
     operator: equal
     expected: <h3></h3>
     actual:   [ <h2></h2>, <h3></h3>, <ul></ul> ]
-    at: compare (${dir}/index.jsx:109:15)
+    at: compare (${checkFile}:109:15)
   ...
 
 1..5

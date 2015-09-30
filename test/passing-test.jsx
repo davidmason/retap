@@ -1,5 +1,5 @@
 
-import test from '../index.jsx'
+import test from '../src/retap.jsx'
 import React from 'react'
 import DwarfPlanet from './DwarfPlanet'
 

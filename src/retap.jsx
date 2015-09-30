@@ -3,7 +3,7 @@ import tape from 'tape'
 import defined from 'defined'
 import _, { isArray, isEmpty, isUndefined, zipWith } from 'lodash'
 
-import { ctx } from './lib/print'
+import { ctx } from './print'
 
 import createComponent from 'react-unit'
 
