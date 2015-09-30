@@ -26,38 +26,56 @@ ok 5 wrong element type at (root)<div>[0]<h2>
 ok 6 Missing expected classNames at path (root)<div>[0]<h2>
 ok 7 Found unexpected classNames at path (root)<div>[0]<h2>
 ok 8 should have same styles at (root)<div>[0]<h2>
-ok 9 wrong element type at (root)<div>[1]<h3>
-ok 10 Missing expected classNames at path (root)<div>[1]<h3>
-ok 11 Found unexpected classNames at path (root)<div>[1]<h3>
-ok 12 should have same styles at (root)<div>[1]<h3>
-ok 13 wrong element type at (root)<div>[2]<ul>
-ok 14 Missing expected classNames at path (root)<div>[2]<ul>
-ok 15 Found unexpected classNames at path (root)<div>[2]<ul>
-ok 16 should have same styles at (root)<div>[2]<ul>
-ok 17 wrong element type at (root)<div>[2]<ul>[0]<li>
-ok 18 Missing expected classNames at path (root)<div>[2]<ul>[0]<li>
-ok 19 Found unexpected classNames at path (root)<div>[2]<ul>[0]<li>
-ok 20 should have same styles at (root)<div>[2]<ul>[0]<li>
-ok 21 wrong element type at (root)<div>[2]<ul>[1]<li>
-ok 22 Missing expected classNames at path (root)<div>[2]<ul>[1]<li>
-ok 23 Found unexpected classNames at path (root)<div>[2]<ul>[1]<li>
-ok 24 should have same styles at (root)<div>[2]<ul>[1]<li>
-ok 25 wrong element type at (root)<div>[2]<ul>[2]<li>
-ok 26 Missing expected classNames at path (root)<div>[2]<ul>[2]<li>
-ok 27 Found unexpected classNames at path (root)<div>[2]<ul>[2]<li>
-ok 28 should have same styles at (root)<div>[2]<ul>[2]<li>
-ok 29 wrong element type at (root)<div>[2]<ul>[3]<li>
-ok 30 Missing expected classNames at path (root)<div>[2]<ul>[3]<li>
-ok 31 Found unexpected classNames at path (root)<div>[2]<ul>[3]<li>
-ok 32 should have same styles at (root)<div>[2]<ul>[3]<li>
-ok 33 wrong element type at (root)<div>[2]<ul>[4]<li>
-ok 34 Missing expected classNames at path (root)<div>[2]<ul>[4]<li>
-ok 35 Found unexpected classNames at path (root)<div>[2]<ul>[4]<li>
-ok 36 should have same styles at (root)<div>[2]<ul>[4]<li>
+ok 9 Missing expected text at path (root)<div>[0]<h2>
+ok 10 Found unexpected text at path (root)<div>[0]<h2>
+ok 11 wrong element type at (root)<div>[1]<h3>
+ok 12 Missing expected classNames at path (root)<div>[1]<h3>
+ok 13 Found unexpected classNames at path (root)<div>[1]<h3>
+ok 14 should have same styles at (root)<div>[1]<h3>
+ok 15 Missing expected text at path (root)<div>[1]<h3>
+ok 16 Found unexpected text at path (root)<div>[1]<h3>
+ok 17 wrong element type at (root)<div>[2]<ul>
+ok 18 Missing expected classNames at path (root)<div>[2]<ul>
+ok 19 Found unexpected classNames at path (root)<div>[2]<ul>
+ok 20 should have same styles at (root)<div>[2]<ul>
+ok 21 wrong element type at (root)<div>[2]<ul>[0]<li>
+ok 22 Missing expected classNames at path (root)<div>[2]<ul>[0]<li>
+ok 23 Found unexpected classNames at path (root)<div>[2]<ul>[0]<li>
+ok 24 should have same styles at (root)<div>[2]<ul>[0]<li>
+ok 25 Missing expected text at path (root)<div>[2]<ul>[0]<li>
+ok 26 Found unexpected text at path (root)<div>[2]<ul>[0]<li>
+ok 27 wrong element type at (root)<div>[2]<ul>[1]<li>
+ok 28 Missing expected classNames at path (root)<div>[2]<ul>[1]<li>
+ok 29 Found unexpected classNames at path (root)<div>[2]<ul>[1]<li>
+ok 30 should have same styles at (root)<div>[2]<ul>[1]<li>
+ok 31 Missing expected text at path (root)<div>[2]<ul>[1]<li>
+ok 32 Found unexpected text at path (root)<div>[2]<ul>[1]<li>
+ok 33 wrong element type at (root)<div>[2]<ul>[2]<li>
+ok 34 Missing expected classNames at path (root)<div>[2]<ul>[2]<li>
+ok 35 Found unexpected classNames at path (root)<div>[2]<ul>[2]<li>
+ok 36 should have same styles at (root)<div>[2]<ul>[2]<li>
+ok 37 Missing expected text at path (root)<div>[2]<ul>[2]<li>
+ok 38 Found unexpected text at path (root)<div>[2]<ul>[2]<li>
+ok 39 wrong element type at (root)<div>[2]<ul>[3]<li>
+ok 40 Missing expected classNames at path (root)<div>[2]<ul>[3]<li>
+ok 41 Found unexpected classNames at path (root)<div>[2]<ul>[3]<li>
+ok 42 should have same styles at (root)<div>[2]<ul>[3]<li>
+ok 43 Missing expected text at path (root)<div>[2]<ul>[3]<li>
+ok 44 Found unexpected text at path (root)<div>[2]<ul>[3]<li>
+ok 45 wrong element type at (root)<div>[2]<ul>[4]<li>
+ok 46 Missing expected classNames at path (root)<div>[2]<ul>[4]<li>
+ok 47 Found unexpected classNames at path (root)<div>[2]<ul>[4]<li>
+ok 48 should have same styles at (root)<div>[2]<ul>[4]<li>
+ok 49 Missing expected text at path (root)<div>[2]<ul>[4]<li>
+ok 50 Found unexpected text at path (root)<div>[2]<ul>[4]<li>
+ok 51 Missing expected text at path (root)<div>[2]<ul>
+ok 52 Found unexpected text at path (root)<div>[2]<ul>
+ok 53 Missing expected text at path (root)<div>
+ok 54 Found unexpected text at path (root)<div>
 
-1..36
-# tests 36
-# pass  36
+1..54
+# tests 54
+# pass  54
 
 # ok
 
@@ -87,7 +105,7 @@ not ok 2 Missing expected classNames at path (root)<div>
       [ 'elf-planet' ]
     actual: |-
       []
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:125:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:139:8)
   ...
 not ok 3 Found unexpected classNames at path (root)<div>
   ---
@@ -96,7 +114,7 @@ not ok 3 Found unexpected classNames at path (root)<div>
       []
     actual: |-
       [ 'dwarf-planet' ]
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:133:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:147:8)
   ...
 ok 4 should have same styles at (root)<div>
 not ok 5 child elements should be identical at (root)<div>
@@ -106,11 +124,25 @@ not ok 5 child elements should be identical at (root)<div>
     actual:   [ <h2></h2>, <h3></h3>, <ul></ul> ]
     at: compare (${checkFile}:109:15)
   ...
+not ok 6 Missing expected text at path (root)<div>
+  ---
+    operator: isSameMarkup
+    expected: [ 'No known satellites' ]
+    actual:   []
+    at: compare (${checkFile}:114:13)
+  ...
+not ok 7 Found unexpected text at path (root)<div>
+  ---
+    operator: isSameMarkup
+    expected: []
+    actual:   [ 'Satellites' ]
+    at: compare (${checkFile}:120:13)
+  ...
 
-1..5
-# tests 5
+1..7
+# tests 7
 # pass  2
-# fail  3
+# fail  5
 
 `
     t.equal(actual, expected,

@@ -109,6 +109,20 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
       harness.equal(children(actual), children(expected),
         `child elements should be identical at ${ctx(localContext)}`)
     }
+
+    const textDiff = arrayCompare(expected.texts, actual.texts)
+    harness._assert(!textDiff.missing.length, {
+      message: `Missing expected text at path ${ctx(localContext)}`,
+      operator: 'isSameMarkup',
+      actual: [],
+      expected: textDiff.missing
+    })
+    harness._assert(!textDiff.added.length, {
+      message: `Found unexpected text at path ${ctx(localContext)}`,
+      operator: 'isSameMarkup',
+      actual: textDiff.added,
+      expected: []
+    })
   }
 }
 

@@ -6,7 +6,7 @@ import DwarfPlanet from './DwarfPlanet'
 test('DwarfPlanet generates correct markup', t => {
   const actual = (
     <DwarfPlanet designation="1 Ceres"
-      satellites={['something']}/>
+      satellites={['']}/>
   )
 
   t.isSameMarkup(actual, (
