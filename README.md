@@ -21,6 +21,43 @@ This module can return a
 
 ## Usage
 
+### Running tests
+
+Since your tests probably include JSX, they need to be transpiled. I use
+[babel-tape-runner](https://www.npmjs.com/package/babel-tape-runner):
+
+```
+npm install -g babel-tape-runner
+babel-tape-runner tests/**/*.jsx
+```
+
+That gives raw tap output. You can pipe it to
+[faucet](https://www.npmjs.com/package/faucet) to make it easier to read.
+
+```
+npm install -g faucet
+babel-tape-runner tests/**/*.jsx | faucet
+```
+
+Rather than global installs, you can install babel-tape-runner and faucet
+as dev dependencies and run them with `npm test`:
+
+```
+// package.json
+  ...
+  "scripts": {
+    "test": "babel-tape-runner tests/**/*.jsx | faucet"
+  },
+  "devDependencies": {
+    "babel-tape-runner": "^1.2.0",
+    "faucet": "0.0.1",
+    "react": "^0.13.3"
+  }
+  ...
+```
+
+### Writing tests
+
 Use it like *tape*, but now you can call `t.isSameMarkup()` with JSX to
 compare. You don't have to use JSX - if you feel like using
 `React.createElement()`, who am I to stop you?

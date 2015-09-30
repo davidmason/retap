@@ -1,6 +1,6 @@
 {
   "name": "retap",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Wrapper around tape that adds functions for testing React components",
   "main": "lib/retap.js",
   "scripts": {
