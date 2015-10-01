@@ -11,24 +11,12 @@ import createComponent from 'react-unit'
  * Extend tape with comparisons for React component trees
  */
 
-// TODO move stuff in here from react-markup-test
-
-const defaultMessage = 'something like "found unexpected classNames"'
-
-Test.prototype.myMethod = function (a, b, msg, extra) {
-  const comparison = a === b // any bool here
-  this._assert(comparison, {
-    message: defined(msg, defaultMessage),
-    actual: a,
-    expected: b, // these seem freeform, have seen expected, notExpected, error
-    extra: extra
-  })
-}
-
-function rendered (jsx) {
-  // type is function until render
-  return typeof jsx.type !== 'function'
-}
+// FIXME plain JSX does not have type 'function' even before render, so
+//       some better way is needed to tell
+// function rendered (jsx) {
+//   // type is function until render
+//   return typeof jsx.type !== 'function'
+// }
 
 Test.prototype.createComponent = createComponent
 
