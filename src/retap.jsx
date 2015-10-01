@@ -65,35 +65,30 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     }
 
     harness.equal(actual.type, expected.type,
-      `element type should match at ${ctx(localContext)}`)
+      `should have same element type at ${ctx(localContext)}`)
 
     // if types are the same, check type-specific attributes
     if (actual.type === expected.type) {
       switch (expected.type) {
         case 'img':
           harness.equal(actual.props.src, expected.props.src,
-            'src should match in <img> tags')
+            `should have same src in <img> tag at ${ctx(localContext)}`)
           break;
         case 'a':
           harness.equal(actual.props.href, expected.props.href,
-            'href should match in <a> tags')
+            `should have same href in <a> tag at ${ctx(localContext)}`)
       }
-
     }
 
     harness.isSameClasses(className(actual), className(expected), localContext)
-
-    // TODO compare styles without order
-
     harness.deepEqual(style(actual), style(expected),
       `should have same styles at ${ctx(localContext)}`)
+    harness.equal(actual.props.title, expected.props.title,
+      `should have same title at ${ctx(localContext)}`)
 
     // FIXME .text and .texts both give combined text from elements
     //       but I want to treat the immediate child text similar to
     //       other children and just compare it
-
-    // TODO handle one children not defined
-    //      or is a string
 
     const actualChildren = isArray(children(actual))
       ? children(actual) : [children(actual)]
@@ -106,6 +101,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     let index = 0
     // not entirely comfortable using zipWith just for side effects
     // but it is the best fit I have found so far
+    // TODO change to use zip, then foreach
     zipWith(actualChildren, expectedChildren, (actual, expected) => {
         compare(actual, expected, localContext.concat(index))
         index++

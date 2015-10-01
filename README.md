@@ -146,6 +146,7 @@ Generate tap errors in the output for mismatches between *actual* and
  - classNames match (in any order)
  - styles match in any order
  - text content matches
+ - title attribute matches
  - src matches (for <img> tags)
  - href matches (for <a> tags)
 
