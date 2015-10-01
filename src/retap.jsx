@@ -44,7 +44,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
 
     if (isUndefined(expected)) {
       harness._assert(false, {
-        message: `expected no more elements at ${ctx(context)}`,
+        message: `should have no more elements at ${ctx(context)}`,
         operator: 'isSameMarkup',
         actual: '<' + actual.type + '>',
         expected: undefined
@@ -56,7 +56,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
 
     if (isUndefined(actual)) {
       harness._assert(false, {
-        message: `expected to find more elements at ${ctx(localContext)}`,
+        message: `should have more elements at ${ctx(localContext)}`,
         operator: 'isSameMarkup',
         actual: undefined,
         expected: expected // '<' + expected.type + '>'
@@ -65,7 +65,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     }
 
     harness.equal(actual.type, expected.type,
-      `wrong element type at ${ctx(localContext)}`)
+      `element type should match at ${ctx(localContext)}`)
 
     harness.isSameClasses(className(actual), className(expected), localContext)
 
@@ -100,13 +100,13 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
 
     const textDiff = arrayCompare(expected.texts, actual.texts)
     harness._assert(!textDiff.missing.length, {
-      message: `Missing expected text at path ${ctx(localContext)}`,
+      message: `should have all expected text at path ${ctx(localContext)}`,
       operator: 'isSameMarkup',
       actual: [],
       expected: textDiff.missing
     })
     harness._assert(!textDiff.added.length, {
-      message: `Found unexpected text at path ${ctx(localContext)}`,
+      message: `should have only expected text at path ${ctx(localContext)}`,
       operator: 'isSameMarkup',
       actual: textDiff.added,
       expected: []
@@ -125,7 +125,7 @@ Test.prototype.isSameClasses = function (actual, expected, context) {
 
   // TODO maybe provide the full list of classes
   this._assert(!diff.missing.length, {
-    message: `Missing expected classNames at path ${ctx(context)}`,
+    message: `should have all expected classNames at path ${ctx(context)}`,
     operator: 'isSameClasses',
     actual: [],
     expected: diff.missing
@@ -133,7 +133,7 @@ Test.prototype.isSameClasses = function (actual, expected, context) {
 
   // TODO maybe provide the full list of classes
   this._assert(!diff.added.length, {
-    message: `Found unexpected classNames at path ${ctx(context)}`,
+    message: `should have only expected classNames at path ${ctx(context)}`,
     operator: 'isSameClasses',
     actual: diff.added,
     expected: []
