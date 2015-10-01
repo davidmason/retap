@@ -98,7 +98,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
       harness.equal(actual, expected,
         `should have same title at ${ctx(localContext)}`)
     })
-    ifEitherDefined(innerHtml(actual), innerHtml(expected),
+    ifEitherDefined(innerHTML(actual), innerHTML(expected),
       (actual, expected) => {
         harness.equal(actual.__html, expected.__html,
           `should dangerously set same inner html at ${ctx(localContext)}`)
@@ -184,8 +184,8 @@ function title (item) {
   return item.props ? item.props.title : undefined
 }
 
-function innerHtml (item) {
-  return item.props ? item.props.dangerouslySetInnerHtml : undefined
+function innerHTML (item) {
+  return item.props ? item.props.dangerouslySetInnerHTML : undefined
 }
 
 function arrayCompare (actual, expected) {
