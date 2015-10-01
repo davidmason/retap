@@ -74,6 +74,9 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
           harness.equal(actual.props.src, expected.props.src,
             'src should match in <img> tags')
           break;
+        case 'a':
+          harness.equal(actual.props.href, expected.props.href,
+            'href should match in <a> tags')
       }
 
     }

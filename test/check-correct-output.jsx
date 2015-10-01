@@ -105,7 +105,7 @@ not ok 2 should have all expected classNames at path (root)<div>
       [ 'elf-planet' ]
     actual: |-
       []
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:138:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:141:8)
   ...
 not ok 3 should have only expected classNames at path (root)<div>
   ---
@@ -114,7 +114,7 @@ not ok 3 should have only expected classNames at path (root)<div>
       []
     actual: |-
       [ 'dwarf-planet' ]
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:146:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:149:8)
   ...
 ok 4 should have same styles at (root)<div>
 not ok 5 element type should match at (root)<div>[0]<h3>
@@ -148,14 +148,14 @@ not ok 13 should have all expected text at path (root)<div>
     operator: isSameMarkup
     expected: [ 'No known satellites' ]
     actual:   []
-    at: compare (${checkFile}:113:13)
+    at: compare (${checkFile}:116:13)
   ...
 not ok 14 should have only expected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: []
     actual:   [ 'Satellites' ]
-    at: compare (${checkFile}:119:13)
+    at: compare (${checkFile}:122:13)
   ...
 
 1..14
@@ -186,28 +186,43 @@ ok 1 element type should match at (root)<div>
 ok 2 should have all expected classNames at path (root)<div>
 ok 3 should have only expected classNames at path (root)<div>
 ok 4 should have same styles at (root)<div>
-ok 5 element type should match at (root)<div>[0]<img>
-not ok 6 src should match in <img> tags
+ok 5 element type should match at (root)<div>[0]<a>
+not ok 6 href should match in <a> tags
   ---
     operator: equal
     expected: |-
-      'http://www.wga.hu/art/r/rombouts/luteplay.jpg'
+      'http://www.nasa.gov/mission_pages/newhorizons/images/index.html'
     actual: |-
-      'http://www.nasa.gov/sites/default/files/thumbnails/image/nh-pluto-in-false-color.jpg'
-    at: compare (/home/damason/src/davidmason/retap/src/retap.jsx:74:19)
+      'http://www.lutesandguitars.co.uk/htm/gallery.htm'
+    at: compare (${checkFile}:78:19)
   ...
-ok 7 should have all expected classNames at path (root)<div>[0]<img>
-ok 8 should have only expected classNames at path (root)<div>[0]<img>
-ok 9 should have same styles at (root)<div>[0]<img>
-ok 10 should have all expected text at path (root)<div>[0]<img>
-ok 11 should have only expected text at path (root)<div>[0]<img>
-ok 12 should have all expected text at path (root)<div>
-ok 13 should have only expected text at path (root)<div>
+ok 7 should have all expected classNames at path (root)<div>[0]<a>
+ok 8 should have only expected classNames at path (root)<div>[0]<a>
+ok 9 should have same styles at (root)<div>[0]<a>
+ok 10 element type should match at (root)<div>[0]<a>[0]<img>
+not ok 11 src should match in <img> tags
+  ---
+    operator: equal
+    expected: |-
+      'http://www.nasa.gov/sites/default/files/thumbnails/image/nh-pluto-in-false-color.jpg'
+    actual: |-
+      'http://www.wga.hu/art/r/rombouts/luteplay.jpg'
+    at: compare (${checkFile}:74:19)
+  ...
+ok 12 should have all expected classNames at path (root)<div>[0]<a>[0]<img>
+ok 13 should have only expected classNames at path (root)<div>[0]<a>[0]<img>
+ok 14 should have same styles at (root)<div>[0]<a>[0]<img>
+ok 15 should have all expected text at path (root)<div>[0]<a>[0]<img>
+ok 16 should have only expected text at path (root)<div>[0]<a>[0]<img>
+ok 17 should have all expected text at path (root)<div>[0]<a>
+ok 18 should have only expected text at path (root)<div>[0]<a>
+ok 19 should have all expected text at path (root)<div>
+ok 20 should have only expected text at path (root)<div>
 
-1..13
-# tests 13
-# pass  12
-# fail  1
+1..20
+# tests 20
+# pass  18
+# fail  2
 
 `
     t.equal(actual, expected,

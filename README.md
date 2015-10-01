@@ -147,6 +147,7 @@ Generate tap errors in the output for mismatches between *actual* and
  - styles match in any order
  - text content matches
  - src matches (for <img> tags)
+ - href matches (for <a> tags)
 
 *Note: `isSameMarkup` will perform numerous checks that each count as part
 of the test plan, so take these into account if using `t.plan()`.
