@@ -149,6 +149,7 @@ Generate tap errors in the output for mismatches between *actual* and
  - title attribute matches
  - src matches (for <img> tags)
  - href matches (for <a> tags)
+ - content set with dangerouslySetInnerHtml matches
 
 *Note: `isSameMarkup` will perform numerous checks that each count as part
 of the test plan, so take these into account if using `t.plan()`.

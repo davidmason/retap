@@ -1,6 +1,6 @@
 {
   "name": "retap",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Wrapper around tape that adds functions for testing React components",
   "main": "lib/retap.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "passing-test": "babel-tape-runner \"test/passing-test.jsx\"",
     "failing-test": "babel-tape-runner \"test/failing-test.jsx\"",
     "elements-test": "babel-tape-runner \"test/element-specific-checks.jsx\"",
+    "dangerous-test": "babel-tape-runner \"test/dangerous-html.jsx\"",
     "clean": "rm -rf lib",
     "compile": "babel src -d lib --source-maps",
     "prepublish": "npm run clean && npm run compile"

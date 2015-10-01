@@ -20,6 +20,12 @@ import createComponent from 'react-unit'
 
 Test.prototype.createComponent = createComponent
 
+function ifEitherDefined(a, b, callback) {
+  if (!isUndefined(a) || !isUndefined(b)) {
+    callback(a, b)
+  }
+}
+
 /**
  * Check that elements, classes and inline styles are as expected.
  *
@@ -80,11 +86,23 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
       }
     }
 
-    harness.isSameClasses(className(actual), className(expected), localContext)
-    harness.deepEqual(style(actual), style(expected),
-      `should have same styles at ${ctx(localContext)}`)
-    harness.equal(actual.props.title, expected.props.title,
-      `should have same title at ${ctx(localContext)}`)
+    ifEitherDefined(className(actual), className(expected),
+      (actual, expected) => {
+        harness.isSameClasses(actual, expected, localContext)
+      })
+    ifEitherDefined(style(actual), style(expected), (actual, expected) => {
+      harness.deepEqual(actual, expected,
+        `should have same styles at ${ctx(localContext)}`)
+    })
+    ifEitherDefined(title(actual), title(expected), (actual, expected) => {
+      harness.equal(actual, expected,
+        `should have same title at ${ctx(localContext)}`)
+    })
+    ifEitherDefined(innerHtml(actual), innerHtml(expected),
+      (actual, expected) => {
+        harness.equal(actual.__html, expected.__html,
+          `should dangerously set same inner html at ${ctx(localContext)}`)
+      })
 
     // FIXME .text and .texts both give combined text from elements
     //       but I want to treat the immediate child text similar to
@@ -151,15 +169,23 @@ Test.prototype.isSameClasses = function (actual, expected, context) {
 }
 
 function className (item) {
-  return item.props.className
+  return item.props ? item.props.className : undefined
 }
 
 function style (item) {
-  return item.props.style
+  return item.props ? item.props.style : undefined
 }
 
 function children (item) {
-  return item.props.children
+  return item.props ? item.props.children : undefined
+}
+
+function title (item) {
+  return item.props ? item.props.title : undefined
+}
+
+function innerHtml (item) {
+  return item.props ? item.props.dangerouslySetInnerHtml : undefined
 }
 
 function arrayCompare (actual, expected) {
