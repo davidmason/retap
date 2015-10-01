@@ -139,11 +139,16 @@ test('DwarfPlanet generates correct markup', t => {
 
 ### **`t.isSameMarkup(actual, expected)`**
 
-Generate tap errors in the output for any element, className or style that
-does not match between *actual* and *expected*. classNames can be in a
-different order as long as they are the same set.
+Generate tap errors in the output for mismatches between *actual* and
+*expected*. Not everything is checked, checks run are:
 
-*Note: `isSameMarkup` will perform numerous checks that each cound as part
+ - elements are of correct types and are in the same tree structure
+ - classNames match (in any order)
+ - styles match in any order
+ - text content matches
+ - src matches (for <img> tags)
+
+*Note: `isSameMarkup` will perform numerous checks that each count as part
 of the test plan, so take these into account if using `t.plan()`.
 
 #### Params

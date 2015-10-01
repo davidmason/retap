@@ -67,6 +67,17 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     harness.equal(actual.type, expected.type,
       `element type should match at ${ctx(localContext)}`)
 
+    // if types are the same, check type-specific attributes
+    if (actual.type === expected.type) {
+      switch (expected.type) {
+        case 'img':
+          harness.equal(actual.props.src, expected.props.src,
+            'src should match in <img> tags')
+          break;
+      }
+
+    }
+
     harness.isSameClasses(className(actual), className(expected), localContext)
 
     // TODO compare styles without order

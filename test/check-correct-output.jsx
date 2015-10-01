@@ -105,7 +105,7 @@ not ok 2 should have all expected classNames at path (root)<div>
       [ 'elf-planet' ]
     actual: |-
       []
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:127:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:138:8)
   ...
 not ok 3 should have only expected classNames at path (root)<div>
   ---
@@ -114,7 +114,7 @@ not ok 3 should have only expected classNames at path (root)<div>
       []
     actual: |-
       [ 'dwarf-planet' ]
-    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:135:8)
+    at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:146:8)
   ...
 ok 4 should have same styles at (root)<div>
 not ok 5 element type should match at (root)<div>[0]<h3>
@@ -148,14 +148,14 @@ not ok 13 should have all expected text at path (root)<div>
     operator: isSameMarkup
     expected: [ 'No known satellites' ]
     actual:   []
-    at: compare (${checkFile}:102:13)
+    at: compare (${checkFile}:113:13)
   ...
 not ok 14 should have only expected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: []
     actual:   [ 'Satellites' ]
-    at: compare (${checkFile}:108:13)
+    at: compare (${checkFile}:119:13)
   ...
 
 1..14
@@ -166,5 +166,51 @@ not ok 14 should have only expected text at path (root)<div>
 `
     t.equal(actual, expected,
       'should have the expected output when there are errors')
+  }))
+})
+
+test('fails on mismatched element-specific checks', t => {
+  t.plan(2)
+
+  const proc = child_process.spawn(executable,
+    ['test/element-specific-checks.jsx'])
+  proc.on('exit', (code, signal) => {
+    t.notEqual(code, 0, 'exit code should be non-0 when there are errors')
+  })
+  proc.stdout.pipe(concat(function (output) {
+    const actual = output.toString('utf8')
+    const checkFile = path.join(__dirname, '..', 'src', 'retap.jsx')
+    const expected = `TAP version 13
+# Renders correct attributes
+ok 1 element type should match at (root)<div>
+ok 2 should have all expected classNames at path (root)<div>
+ok 3 should have only expected classNames at path (root)<div>
+ok 4 should have same styles at (root)<div>
+ok 5 element type should match at (root)<div>[0]<img>
+not ok 6 src should match in <img> tags
+  ---
+    operator: equal
+    expected: |-
+      'http://www.wga.hu/art/r/rombouts/luteplay.jpg'
+    actual: |-
+      'http://www.nasa.gov/sites/default/files/thumbnails/image/nh-pluto-in-false-color.jpg'
+    at: compare (/home/damason/src/davidmason/retap/src/retap.jsx:74:19)
+  ...
+ok 7 should have all expected classNames at path (root)<div>[0]<img>
+ok 8 should have only expected classNames at path (root)<div>[0]<img>
+ok 9 should have same styles at (root)<div>[0]<img>
+ok 10 should have all expected text at path (root)<div>[0]<img>
+ok 11 should have only expected text at path (root)<div>[0]<img>
+ok 12 should have all expected text at path (root)<div>
+ok 13 should have only expected text at path (root)<div>
+
+1..13
+# tests 13
+# pass  12
+# fail  1
+
+`
+    t.equal(actual, expected,
+      'should have the expected output for mismatched supported attributes')
   }))
 })
