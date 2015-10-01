@@ -117,21 +117,40 @@ not ok 3 Found unexpected classNames at path (root)<div>
     at: Test._tapeLibTest2.default.isSameClasses (${checkFile}:147:8)
   ...
 ok 4 should have same styles at (root)<div>
-not ok 5 child elements should be identical at (root)<div>
+not ok 5 wrong element type at (root)<div>[0]<h3>
   ---
     operator: equal
-    expected: <h3></h3>
-    actual:   [ <h2></h2>, <h3></h3>, <ul></ul> ]
-    at: compare (${checkFile}:109:15)
+    expected: 'h3'
+    actual:   'h2'
+    at: compare (${checkFile}:79:13)
   ...
-not ok 6 Missing expected text at path (root)<div>
+ok 6 Missing expected classNames at path (root)<div>[0]<h3>
+ok 7 Found unexpected classNames at path (root)<div>[0]<h3>
+ok 8 should have same styles at (root)<div>[0]<h3>
+ok 9 Missing expected text at path (root)<div>[0]<h3>
+ok 10 Found unexpected text at path (root)<div>[0]<h3>
+not ok 11 expected no more elements at (root)<div>[1]
+  ---
+    operator: isSameMarkup
+    expected: undefined
+    actual:   '<h3>'
+    at: compare (${checkFile}:58:15)
+  ...
+not ok 12 expected no more elements at (root)<div>[2]
+  ---
+    operator: isSameMarkup
+    expected: undefined
+    actual:   '<ul>'
+    at: compare (${checkFile}:58:15)
+  ...
+not ok 13 Missing expected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: [ 'No known satellites' ]
     actual:   []
     at: compare (${checkFile}:114:13)
   ...
-not ok 7 Found unexpected text at path (root)<div>
+not ok 14 Found unexpected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: []
@@ -139,10 +158,10 @@ not ok 7 Found unexpected text at path (root)<div>
     at: compare (${checkFile}:120:13)
   ...
 
-1..7
-# tests 7
-# pass  2
-# fail  5
+1..14
+# tests 14
+# pass  7
+# fail  7
 
 `
     t.equal(actual, expected,

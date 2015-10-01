@@ -93,22 +93,22 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     // TODO handle one children not defined
     //      or is a string
 
-    if (isArray(children(actual)) && isArray(children(expected))) {
-      // zipWith does not give the position within the array pairs
-      // so I track it manually
-      let index = 0
-      // not entirely comfortable using zipWith just for side effects
-      // but it is the best fit I have found so far
-      zipWith(children(actual), children(expected),
-        (actual, expected) => {
-          compare(actual, expected, localContext.concat(index))
-          index++
-        }
-      )
-    } else {
-      harness.equal(children(actual), children(expected),
-        `child elements should be identical at ${ctx(localContext)}`)
-    }
+    const actualChildren = isArray(children(actual))
+      ? children(actual) : [children(actual)]
+    const expectedChildren = isArray(children(expected))
+      ? children(expected) : [children(expected)]
+
+
+    // zipWith does not give the position within the array pairs
+    // so I track it manually
+    let index = 0
+    // not entirely comfortable using zipWith just for side effects
+    // but it is the best fit I have found so far
+    zipWith(actualChildren, expectedChildren, (actual, expected) => {
+        compare(actual, expected, localContext.concat(index))
+        index++
+      }
+    )
 
     const textDiff = arrayCompare(expected.texts, actual.texts)
     harness._assert(!textDiff.missing.length, {
