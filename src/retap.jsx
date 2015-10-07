@@ -20,6 +20,9 @@ import createComponent from 'react-unit'
 
 Test.prototype.createComponent = createComponent
 
+
+// Note: this shows up in the tape output as "at ifEitherDefined"
+// may want to look into that.
 function ifEitherDefined(a, b, callback) {
   if (!isUndefined(a) || !isUndefined(b)) {
     callback(a, b)
@@ -43,6 +46,8 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
 
   compare(actualRender, expectedRender)
 
+  // TODO separate traversal from checks
+  // TODO split checks into separate functions
   function compare (actual, expected, context = []) {
     if (isUndefined(actual) && isUndefined(expected)) {
       return
@@ -79,10 +84,17 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
         case 'img':
           harness.equal(actual.props.src, expected.props.src,
             `should have same src in <img> tag at ${ctx(localContext)}`)
-          break;
+          break
         case 'a':
           harness.equal(actual.props.href, expected.props.href,
             `should have same href in <a> tag at ${ctx(localContext)}`)
+          break
+        case 'label':
+          ifEitherDefined(htmlFor(actual), htmlFor(expected),
+            function checkMatchingHtmlFor (actual, expected) {
+              harness.equal(actual, expected,
+                `label should be for the same id at ${ctx(localContext)}`)
+            })
       }
     }
 
@@ -186,6 +198,10 @@ function title (item) {
 
 function innerHTML (item) {
   return item.props ? item.props.dangerouslySetInnerHTML : undefined
+}
+
+function htmlFor (item) {
+  return item.props ? item.props.htmlFor : undefined
 }
 
 function arrayCompare (actual, expected) {
