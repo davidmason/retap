@@ -5,9 +5,7 @@ import concat from'concat-stream'
 
 const executable = path.join(__dirname, '..', 'node_modules', 'babel-tape-runner', 'bin', 'babel-tape-runner')
 
-// TODO tests should ideally report the location in the JSX under test, or at
-//      least the file under test, rather than in the testing library
-const fileThatChecks = path.join(__dirname, '..', 'src', 'retap.jsx')
+// TODO tests should ideally report the location in the JSX under test
 
 test('correct tap output for no errors', function correctSuccessOutput (t) {
   t.plan(2)
@@ -77,6 +75,8 @@ ok 39 should have only expected text at path (root)<div>
 test('correct tap output for errors', function correctFailureOutput (t) {
   t.plan(2)
 
+  const testFile = `${__dirname}/failing-test.jsx`
+
   const proc = child_process.spawn(executable, ['test/failing-test.jsx'])
   proc.on('exit', (code, signal) => {
     t.notEqual(code, 0, 'exit code should be non-0 when there are errors')
@@ -93,7 +93,7 @@ not ok 2 should have all expected classNames at path (root)<div>
       [ 'elf-planet' ]
     actual: |-
       []
-    at: Test._tapeLibTest2.default.isSameClasses (${fileThatChecks}:169:8)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 3 should have only expected classNames at path (root)<div>
   ---
@@ -102,14 +102,14 @@ not ok 3 should have only expected classNames at path (root)<div>
       []
     actual: |-
       [ 'dwarf-planet' ]
-    at: Test._tapeLibTest2.default.isSameClasses (${fileThatChecks}:177:8)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 4 should have same element type at (root)<div>[0]<h3>
   ---
     operator: equal
     expected: 'h3'
     actual:   'h2'
-    at: compare (${fileThatChecks}:78:13)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 ok 5 should have all expected text at path (root)<div>[0]<h3>
 ok 6 should have only expected text at path (root)<div>[0]<h3>
@@ -118,28 +118,28 @@ not ok 7 should have no more elements at (root)<div>[1]
     operator: isSameMarkup
     expected: undefined
     actual:   '<h3>'
-    at: compare (${fileThatChecks}:57:15)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 8 should have no more elements at (root)<div>[2]
   ---
     operator: isSameMarkup
     expected: undefined
     actual:   '<ul>'
-    at: compare (${fileThatChecks}:57:15)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 9 should have all expected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: [ 'No known satellites' ]
     actual:   []
-    at: compare (${fileThatChecks}:144:13)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 10 should have only expected text at path (root)<div>
   ---
     operator: isSameMarkup
     expected: []
     actual:   [ 'Satellites' ]
-    at: compare (${fileThatChecks}:150:13)
+    at: Test.failingTest (${testFile}:12:5)
   ...
 
 1..10
@@ -155,6 +155,8 @@ not ok 10 should have only expected text at path (root)<div>
 
 test('fails on mismatched element-specific checks', t => {
   t.plan(2)
+
+  const testFile = `${__dirname}/element-specific-checks.jsx`
 
   const proc = child_process.spawn(executable,
     ['test/element-specific-checks.jsx'])
@@ -174,7 +176,7 @@ not ok 3 should have same href in <a> tag at (root)<div>[0]<a>
       'http://www.nasa.gov/mission_pages/newhorizons/images/index.html'
     actual: |-
       'http://www.lutesandguitars.co.uk/htm/gallery.htm'
-    at: compare (${fileThatChecks}:89:19)
+    at: Test.rendersCorrectAttributes (${testFile}:24:5)
   ...
 ok 4 should have same element type at (root)<div>[0]<a>[0]<img>
 not ok 5 should have same src in <img> tag at (root)<div>[0]<a>[0]<img>
@@ -184,7 +186,7 @@ not ok 5 should have same src in <img> tag at (root)<div>[0]<a>[0]<img>
       'http://www.nasa.gov/sites/default/files/thumbnails/image/nh-pluto-in-false-color.jpg'
     actual: |-
       'http://www.wga.hu/art/r/rombouts/luteplay.jpg'
-    at: compare (${fileThatChecks}:85:19)
+    at: Test.rendersCorrectAttributes (${testFile}:24:5)
   ...
 not ok 6 should have same title at (root)<div>[0]<a>[0]<img>
   ---
@@ -193,7 +195,7 @@ not ok 6 should have same title at (root)<div>[0]<a>[0]<img>
       'Pluto'
     actual: |-
       'Lute-o'
-    at: ifEitherDefined (${fileThatChecks}:28:5)
+    at: Test.rendersCorrectAttributes (${testFile}:24:5)
   ...
 ok 7 should have all expected text at path (root)<div>[0]<a>[0]<img>
 ok 8 should have only expected text at path (root)<div>[0]<a>[0]<img>
@@ -230,7 +232,7 @@ not ok 2 should dangerously set same inner html at (root)<div>
     operator: equal
     expected: 'Danger Mouse'
     actual:   'Penfold'
-    at: ifEitherDefined (${fileThatChecks}:28:5)
+    at: Test.setsInnerHtml (${__dirname}/dangerous-html.jsx:5:5)
   ...
 ok 3 should have all expected text at path (root)<div>
 ok 4 should have only expected text at path (root)<div>
@@ -263,7 +265,7 @@ not ok 2 label should be for the same id at (root)<label>
     operator: equal
     expected: 'me'
     actual:   'you'
-    at: checkMatchingHtmlFor (${fileThatChecks}:95:23)
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:5:5)
   ...
 ok 3 should have all expected text at path (root)<label>
 ok 4 should have only expected text at path (root)<label>

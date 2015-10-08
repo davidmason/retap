@@ -1,6 +1,6 @@
 {
   "name": "retap",
-  "version": "1.6.0",
+  "version": "1.6.1",
   "description": "Wrapper around tape that adds functions for testing React components",
   "main": "lib/retap.js",
   "scripts": {
@@ -36,6 +36,8 @@
   "homepage": "https://github.com/davidmason/retap#readme",
   "dependencies": {
     "defined": "^1.0.0",
+    "find-filename": "^0.1.0",
+    "has": "^1.0.1",
     "lodash": "^3.10.1",
     "react-unit": "^1.0.6",
     "tape": "^4.2.0"

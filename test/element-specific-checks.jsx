@@ -2,7 +2,7 @@
 import test from '../src/retap.jsx'
 import React from 'react'
 
-test('Renders correct attributes', t => {
+test('Renders correct attributes', function rendersCorrectAttributes (t) {
   const actual = (
     <div>
       <a href="http://www.lutesandguitars.co.uk/htm/gallery.htm">
