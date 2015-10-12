@@ -295,6 +295,10 @@ function without (array, values) {
   return _.without.apply(_, [array].concat(values))
 }
 
+
+const nextTick = typeof setImmediate !== 'undefined'
+  ? setImmediate : process.nextTick
+
 /**
  * Copied from tape to modify how the reported test location is determined.
  *
