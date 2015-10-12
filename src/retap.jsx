@@ -126,12 +126,34 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
           }
           break
         case 'input':
-          for (let propName of ['type', 'value', 'defaultValue']) {
+          for (let propName of ['value', 'defaultValue']) {
             let actualProp = prop(actual, propName)
             let expectedProp = prop(expected, propName)
             if (eitherDefined(actualProp, expectedProp)) {
               harness.equal(actualProp, expectedProp,
                 `input should have same ${propName} at ${ctx(localContext)}`)
+            }
+          }
+
+          let actualType = prop(actual, 'type')
+          let expectedType = prop(expected, 'type')
+          if (eitherDefined(actualType, expectedType)) {
+            harness.equal(actualType, expectedType,
+              `input should have same type attribute at ${ctx(localContext)}`)
+
+            switch (expectedType) {
+              case 'checkbox':
+              case 'radio':
+                for (let propName of ['checked', 'defaultChecked']) {
+                  let actualProp = prop(actual, propName)
+                  let expectedProp = prop(expected, propName)
+                  if (eitherDefined(actualProp, expectedProp)) {
+                    harness.equal(actualProp, expectedProp,
+                      `input (type=${expectedType}) should have same ` +
+                      `${propName} at ${ctx(localContext)}`)
+                  }
+                }
+                break
             }
           }
 
@@ -190,6 +212,7 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
 
     // check text after children so that more specific text differences are
     // shown first
+    // FIXME only compare if there is any text to compare
     const textDiff = arrayCompare(expected.texts, actual.texts)
     harness._assert(!textDiff.missing.length, {
       message: `should have all expected text at path ${ctx(localContext)}`,

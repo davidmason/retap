@@ -65,3 +65,15 @@ test('Compares type attributes on input', t => {
                  <input type="submit"/>)
   t.end()
 })
+
+test('Compares checked attributes on checkbox', t => {
+  // onChange provided to avoid printing a warning from React
+  // (because providing value makes it read only)
+  t.isSameMarkup(<input type="checkbox" checked={true} onChange={()=>{}}/>,
+                 <input type="checkbox" checked={false} onChange={()=>{}}/>)
+  t.isSameMarkup(<input type="checkbox" checked onChange={()=>{}}/>,
+                 <input type="checkbox"/>)
+  t.isSameMarkup(<input type="checkbox"/>,
+                 <input type="checkbox" checked onChange={()=>{}}/>)
+  t.end()
+})
