@@ -2,18 +2,31 @@ import test from 'tape'
 import child_process from'child_process'
 import path from'path'
 import concat from'concat-stream'
+import { isEmpty } from 'lodash'
 
 const executable = path.join(__dirname, '..', 'node_modules', 'babel-tape-runner', 'bin', 'babel-tape-runner')
 
 // TODO tests should ideally report the location in the JSX under test
 
 test('correct tap output for no errors', function correctSuccessOutput (t) {
-  t.plan(2)
+  t.plan(4)
 
   const proc = child_process.spawn(executable, ['test/passing-test.jsx'])
 
+  var stdoutErr;
+  proc.stdout.on('error', (e) => {
+    stdoutErr = e
+  })
+
+  var stderrOutput;
+  proc.stderr.pipe(concat(function (output) {
+    stderrOutput = output
+  }))
+
   proc.on('exit', (code, signal) => {
     t.equal(code, 0, 'exit code should be 0 with no errors')
+    t.error(stdoutErr)
+    t.true(isEmpty(stderrOutput), stderrOutput)
   })
 
   proc.stdout.pipe(concat(function (output) {
@@ -73,13 +86,26 @@ ok 39 should have only expected text at path (root)<div>
 })
 
 test('correct tap output for errors', function correctFailureOutput (t) {
-  t.plan(2)
+  t.plan(4)
 
   const testFile = `${__dirname}/failing-test.jsx`
 
   const proc = child_process.spawn(executable, ['test/failing-test.jsx'])
+
+  var stdoutErr;
+  proc.stdout.on('error', (e) => {
+    stdoutErr = e
+  })
+
+  var stderrOutput;
+  proc.stderr.pipe(concat(function (output) {
+    stderrOutput = output
+  }))
+
   proc.on('exit', (code, signal) => {
     t.notEqual(code, 0, 'exit code should be non-0 when there are errors')
+    t.error(stdoutErr)
+    t.true(isEmpty(stderrOutput), stderrOutput)
   })
   proc.stdout.pipe(concat(function (output) {
     const actual = output.toString('utf8')
@@ -117,14 +143,14 @@ not ok 7 should have no more elements at (root)<div>[1]
   ---
     operator: isSameMarkup
     expected: undefined
-    actual:   '<h3>'
+    actual:   'h3'
     at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 8 should have no more elements at (root)<div>[2]
   ---
     operator: isSameMarkup
     expected: undefined
-    actual:   '<ul>'
+    actual:   'ul'
     at: Test.failingTest (${testFile}:12:5)
   ...
 not ok 9 should have all expected text at path (root)<div>
@@ -154,14 +180,27 @@ not ok 10 should have only expected text at path (root)<div>
 })
 
 test('fails on mismatched element-specific checks', t => {
-  t.plan(2)
+  t.plan(4)
 
   const testFile = `${__dirname}/element-specific-checks.jsx`
 
   const proc = child_process.spawn(executable,
     ['test/element-specific-checks.jsx'])
+
+  var stdoutErr;
+  proc.stdout.on('error', (e) => {
+    stdoutErr = e
+  })
+
+  var stderrOutput;
+  proc.stderr.pipe(concat(function (output) {
+    stderrOutput = output
+  }))
+
   proc.on('exit', (code, signal) => {
     t.notEqual(code, 0, 'exit code should be non-0 when there are errors')
+    t.error(stdoutErr)
+    t.true(isEmpty(stderrOutput), stderrOutput)
   })
   proc.stdout.pipe(concat(function (output) {
     const actual = output.toString('utf8')
@@ -269,11 +308,86 @@ not ok 2 label should be for the same id at (root)<label>
   ...
 ok 3 should have all expected text at path (root)<label>
 ok 4 should have only expected text at path (root)<label>
+# Compares value attributes on input
+ok 5 should have same element type at (root)<input>
+not ok 6 input should have same value at (root)<input>
+  ---
+    operator: equal
+    expected: 'never'
+    actual:   'definitely'
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:13:5)
+  ...
+ok 7 input should have same defaultValue at (root)<input>
+ok 8 should have all expected text at path (root)<input>
+ok 9 should have only expected text at path (root)<input>
+ok 10 should have same element type at (root)<input>
+not ok 11 input should have same value at (root)<input>
+  ---
+    operator: equal
+    expected: |-
+      null
+    actual: |-
+      'gate-crashing'
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:15:5)
+  ...
+ok 12 input should have same defaultValue at (root)<input>
+ok 13 should have all expected text at path (root)<input>
+ok 14 should have only expected text at path (root)<input>
+ok 15 should have same element type at (root)<input>
+not ok 16 input should have same value at (root)<input>
+  ---
+    operator: equal
+    expected: |-
+      'where is it?'
+    actual: |-
+      null
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:17:5)
+  ...
+ok 17 input should have same defaultValue at (root)<input>
+ok 18 should have all expected text at path (root)<input>
+ok 19 should have only expected text at path (root)<input>
+# Compares type attributes on input
+ok 20 should have same element type at (root)<input>
+not ok 21 input should have same type at (root)<input>
+  ---
+    operator: equal
+    expected: 'checkbox'
+    actual:   'text'
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:60:5)
+  ...
+ok 22 input should have same value at (root)<input>
+ok 23 input should have same defaultValue at (root)<input>
+ok 24 should have all expected text at path (root)<input>
+ok 25 should have only expected text at path (root)<input>
+ok 26 should have same element type at (root)<input>
+not ok 27 input should have same type at (root)<input>
+  ---
+    operator: equal
+    expected: undefined
+    actual:   'radio'
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:62:5)
+  ...
+ok 28 input should have same value at (root)<input>
+ok 29 input should have same defaultValue at (root)<input>
+ok 30 should have all expected text at path (root)<input>
+ok 31 should have only expected text at path (root)<input>
+ok 32 should have same element type at (root)<input>
+not ok 33 input should have same type at (root)<input>
+  ---
+    operator: equal
+    expected: 'submit'
+    actual:   undefined
+    at: Test.<anonymous> (${__dirname}/form-elements.jsx:64:5)
+  ...
+ok 34 input should have same value at (root)<input>
+ok 35 input should have same defaultValue at (root)<input>
+ok 36 should have all expected text at path (root)<input>
+ok 37 should have only expected text at path (root)<input>
 
-1..4
-# tests 4
-# pass  3
-# fail  1
+1..37
+# tests 37
+# pass  30
+# fail  7
 
 `
     t.equal(actual, expected,

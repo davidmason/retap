@@ -63,15 +63,21 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
   //      (not with async though, need intact stack)
   // TODO split checks into separate functions
   function compare (actual, expected, context = []) {
-    if (isUndefined(actual) && isUndefined(expected)) {
+    // treat empty string the same as undefined
+    const haveActual = !isUndefined(actual) &&
+      (typeof actual !== 'string' || actual.length)
+    const haveExpected = !isUndefined(expected) &&
+      (typeof expected !== 'string' || expected.length)
+
+    if (!haveActual && !haveExpected) {
       return
     }
 
-    if (isUndefined(expected)) {
+    if (!haveExpected) {
       harness._assert(false, {
         message: `should have no more elements at ${ctx(context)}`,
         operator: 'isSameMarkup',
-        actual: '<' + actual.type + '>',
+        actual: actual.type,
         expected: undefined
       })
       return
@@ -79,12 +85,12 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     // context is based on expected structure
     const localContext = context.concat(expected.type)
 
-    if (isUndefined(actual)) {
+    if (!haveActual) {
       harness._assert(false, {
         message: `should have more elements at ${ctx(localContext)}`,
         operator: 'isSameMarkup',
         actual: undefined,
-        expected: expected // '<' + expected.type + '>'
+        expected: expected.type
       })
       return
     }
@@ -96,18 +102,56 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
     if (actual.type === expected.type) {
       switch (expected.type) {
         case 'img':
-          harness.equal(actual.props.src, expected.props.src,
-            `should have same src in <img> tag at ${ctx(localContext)}`)
+          let actualSrc = prop(actual, 'src')
+          let expectedSrc = prop(expected, 'src')
+          if (eitherDefined(actualSrc, expectedSrc)) {
+            harness.equal(actualSrc, expectedSrc,
+              `should have same src in <img> tag at ${ctx(localContext)}`)
+          }
           break
         case 'a':
-          harness.equal(actual.props.href, expected.props.href,
-            `should have same href in <a> tag at ${ctx(localContext)}`)
+          let actualHref = prop(actual, 'href')
+          let expectedHref = prop(expected, 'href')
+          if (eitherDefined(actualHref, expectedHref)) {
+            harness.equal(actualHref, expectedHref,
+              `should have same href in <a> tag at ${ctx(localContext)}`)
+          }
           break
         case 'label':
-          if (eitherDefined(htmlFor(actual), htmlFor(expected))) {
-            harness.equal(htmlFor(actual), htmlFor(expected),
+          let actualFor = prop(actual, 'htmlFor')
+          let expectedFor = prop(expected, 'htmlFor')
+          if (eitherDefined(actualFor, expectedFor)) {
+            harness.equal(actualFor, expectedFor,
               `label should be for the same id at ${ctx(localContext)}`)
           }
+          break
+        case 'input':
+          for (let propName of ['type', 'value', 'defaultValue']) {
+            let actualProp = prop(actual, propName)
+            let expectedProp = prop(expected, propName)
+            if (eitherDefined(actualProp, expectedProp)) {
+              harness.equal(actualProp, expectedProp,
+                `input should have same ${propName} at ${ctx(localContext)}`)
+            }
+          }
+
+          // TODO switch on prop.type (checkbox, radio, etc.)
+
+
+          // value and defaultValue do not appear to work for textarea
+        // case 'textarea':
+        //   harness.comment(Object.getOwnPropertyNames(actual.props).join(' '))
+        //   for (let propName of ['defaultValue', 'value']) {
+        //     // getting `null` values here, tripping up stuff
+        //     let actualProp = prop(actual, propName)
+        //     let expectedProp = prop(expected, propName)
+        //     if (eitherDefined(actualProp, expectedProp)) {
+        //       harness.comment(`${propName} ${actualProp} ${expectedProp}`)
+        //       harness.equal(actualProp, expectedProp,
+        //         `textarea should have same ${propName} at ${ctx(localContext)}`)
+        //     }
+        //   }
+          break
       }
     }
 
@@ -170,6 +214,7 @@ Test.prototype.isSameClasses = function (actual, expected, context) {
 
   // TODO could add array missing and added functions to prototype
   //      and call with custom message instead
+  //      or array difference function
 
   // TODO maybe provide the full list of classes
   this._assert(!diff.missing.length, {
@@ -188,28 +233,32 @@ Test.prototype.isSameClasses = function (actual, expected, context) {
   })
 }
 
+function prop(item, propName) {
+  return item.props ? item.props[propName] : undefined
+}
+
 function className (item) {
-  return item.props ? item.props.className : undefined
+  return prop(item, 'className')
 }
 
 function style (item) {
-  return item.props ? item.props.style : undefined
+  return prop(item, 'style')
 }
 
 function children (item) {
-  return item.props ? item.props.children : undefined
+  return prop(item, 'children')
 }
 
 function title (item) {
-  return item.props ? item.props.title : undefined
+  return prop(item, 'title')
 }
 
 function innerHTML (item) {
-  return item.props ? item.props.dangerouslySetInnerHTML : undefined
+  return prop(item, 'dangerouslySetInnerHTML')
 }
 
 function htmlFor (item) {
-  return item.props ? item.props.htmlFor : undefined
+  return prop(item, 'htmlFor')
 }
 
 function arrayCompare (actual, expected) {
