@@ -6,6 +6,7 @@ import has from 'has'
 import path from 'path'
 import find from 'find-filename'
 import { ctx } from './print'
+import React from 'react'
 import createComponent from 'react-unit'
 
 /**
@@ -44,6 +45,14 @@ function eitherDefined(a, b) {
   return !isUndefined(a) || !isUndefined(b)
 }
 
+/* This element is just used to wrap components for rendering.
+ * Shallow render will throw an error if the top level is a plain jsx element,
+ * and this works around by ensuring the top is always a React component.
+ */
+const root = ({ children }) => {
+  return <div>{children}</div>
+}
+
 /**
  * Check that elements, classes and inline styles are as expected.
  *
@@ -53,11 +62,12 @@ Test.prototype.isSameMarkup = function isSameMarkup (actual, expected) {
   const harness = this
 
   const actualRender = //rendered(actual) ? actual :
-    createComponent(actual)
+    createComponent(<root>{actual}</root>)
   const expectedRender = //rendered(expected) ? expected :
-    createComponent(expected)
+    createComponent(<root>{expected}</root>)
 
-  compare(actualRender, expectedRender)
+  // use children so that wrapping <root> is ignored
+  compare(children(actualRender), children(expectedRender))
 
   // TODO separate traversal from checks
   //      (not with async though, need intact stack)

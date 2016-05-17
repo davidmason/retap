@@ -1,7 +1,7 @@
 import test from 'tape'
-import child_process from'child_process'
-import path from'path'
-import concat from'concat-stream'
+import child_process from 'child_process'
+import path from 'path'
+import concat from 'concat-stream'
 import { isEmpty } from 'lodash'
 
 const executable = path.join(__dirname, '..', 'node_modules', 'babel-tape-runner', 'bin', 'babel-tape-runner')
@@ -317,121 +317,101 @@ not ok 6 input should have same value at (root)<input>
     actual:   'definitely'
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:13:5)
   ...
-ok 7 input should have same defaultValue at (root)<input>
-ok 8 should have all expected text at path (root)<input>
-ok 9 should have only expected text at path (root)<input>
-ok 10 should have same element type at (root)<input>
-not ok 11 input should have same value at (root)<input>
+ok 7 should have all expected text at path (root)<input>
+ok 8 should have only expected text at path (root)<input>
+ok 9 should have same element type at (root)<input>
+not ok 10 input should have same value at (root)<input>
   ---
     operator: equal
     expected: |-
-      null
+      undefined
     actual: |-
       'gate-crashing'
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:15:5)
   ...
-ok 12 input should have same defaultValue at (root)<input>
-ok 13 should have all expected text at path (root)<input>
-ok 14 should have only expected text at path (root)<input>
-ok 15 should have same element type at (root)<input>
-not ok 16 input should have same value at (root)<input>
+ok 11 should have all expected text at path (root)<input>
+ok 12 should have only expected text at path (root)<input>
+ok 13 should have same element type at (root)<input>
+not ok 14 input should have same value at (root)<input>
   ---
     operator: equal
     expected: |-
       'where is it?'
     actual: |-
-      null
+      undefined
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:17:5)
   ...
-ok 17 input should have same defaultValue at (root)<input>
-ok 18 should have all expected text at path (root)<input>
-ok 19 should have only expected text at path (root)<input>
+ok 15 should have all expected text at path (root)<input>
+ok 16 should have only expected text at path (root)<input>
 # Compares type attributes on input
-ok 20 should have same element type at (root)<input>
-ok 21 input should have same value at (root)<input>
-ok 22 input should have same defaultValue at (root)<input>
-not ok 23 input should have same type attribute at (root)<input>
+ok 17 should have same element type at (root)<input>
+not ok 18 input should have same type attribute at (root)<input>
   ---
     operator: equal
     expected: 'checkbox'
     actual:   'text'
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:60:5)
   ...
-ok 24 input (type=checkbox) should have same checked at (root)<input>
-ok 25 input (type=checkbox) should have same defaultChecked at (root)<input>
-ok 26 should have all expected text at path (root)<input>
-ok 27 should have only expected text at path (root)<input>
-ok 28 should have same element type at (root)<input>
-ok 29 input should have same value at (root)<input>
-ok 30 input should have same defaultValue at (root)<input>
-not ok 31 input should have same type attribute at (root)<input>
+ok 19 should have all expected text at path (root)<input>
+ok 20 should have only expected text at path (root)<input>
+ok 21 should have same element type at (root)<input>
+not ok 22 input should have same type attribute at (root)<input>
   ---
     operator: equal
     expected: undefined
     actual:   'radio'
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:62:5)
   ...
-ok 32 should have all expected text at path (root)<input>
-ok 33 should have only expected text at path (root)<input>
-ok 34 should have same element type at (root)<input>
-ok 35 input should have same value at (root)<input>
-ok 36 input should have same defaultValue at (root)<input>
-not ok 37 input should have same type attribute at (root)<input>
+ok 23 should have all expected text at path (root)<input>
+ok 24 should have only expected text at path (root)<input>
+ok 25 should have same element type at (root)<input>
+not ok 26 input should have same type attribute at (root)<input>
   ---
     operator: equal
     expected: 'submit'
     actual:   undefined
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:64:5)
   ...
-ok 38 should have all expected text at path (root)<input>
-ok 39 should have only expected text at path (root)<input>
+ok 27 should have all expected text at path (root)<input>
+ok 28 should have only expected text at path (root)<input>
 # Compares checked attributes on checkbox
-ok 40 should have same element type at (root)<input>
-ok 41 input should have same value at (root)<input>
-ok 42 input should have same defaultValue at (root)<input>
-ok 43 input should have same type attribute at (root)<input>
-not ok 44 input (type=checkbox) should have same checked at (root)<input>
+ok 29 should have same element type at (root)<input>
+ok 30 input should have same type attribute at (root)<input>
+not ok 31 input (type=checkbox) should have same checked at (root)<input>
   ---
     operator: equal
     expected: false
     actual:   true
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:72:5)
   ...
-ok 45 input (type=checkbox) should have same defaultChecked at (root)<input>
-ok 46 should have all expected text at path (root)<input>
-ok 47 should have only expected text at path (root)<input>
-ok 48 should have same element type at (root)<input>
-ok 49 input should have same value at (root)<input>
-ok 50 input should have same defaultValue at (root)<input>
-ok 51 input should have same type attribute at (root)<input>
-not ok 52 input (type=checkbox) should have same checked at (root)<input>
+ok 32 should have all expected text at path (root)<input>
+ok 33 should have only expected text at path (root)<input>
+ok 34 should have same element type at (root)<input>
+ok 35 input should have same type attribute at (root)<input>
+not ok 36 input (type=checkbox) should have same checked at (root)<input>
   ---
     operator: equal
-    expected: false
+    expected: undefined
     actual:   true
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:74:5)
   ...
-ok 53 input (type=checkbox) should have same defaultChecked at (root)<input>
-ok 54 should have all expected text at path (root)<input>
-ok 55 should have only expected text at path (root)<input>
-ok 56 should have same element type at (root)<input>
-ok 57 input should have same value at (root)<input>
-ok 58 input should have same defaultValue at (root)<input>
-ok 59 input should have same type attribute at (root)<input>
-not ok 60 input (type=checkbox) should have same checked at (root)<input>
+ok 37 should have all expected text at path (root)<input>
+ok 38 should have only expected text at path (root)<input>
+ok 39 should have same element type at (root)<input>
+ok 40 input should have same type attribute at (root)<input>
+not ok 41 input (type=checkbox) should have same checked at (root)<input>
   ---
     operator: equal
     expected: true
-    actual:   false
+    actual:   undefined
     at: Test.<anonymous> (${__dirname}/form-elements.jsx:76:5)
   ...
-ok 61 input (type=checkbox) should have same defaultChecked at (root)<input>
-ok 62 should have all expected text at path (root)<input>
-ok 63 should have only expected text at path (root)<input>
+ok 42 should have all expected text at path (root)<input>
+ok 43 should have only expected text at path (root)<input>
 
-1..63
-# tests 63
-# pass  53
+1..43
+# tests 43
+# pass  33
 # fail  10
 
 `
